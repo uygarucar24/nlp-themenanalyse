@@ -27,6 +27,7 @@ def show_wordclouds(model, vectorizer, method, n_words=15):
         axes[j].axis("off")
 
     plt.tight_layout()
+    plt.savefig(f"results/wortwolken_{method}.png")
     plt.show()
 
 

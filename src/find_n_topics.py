@@ -13,7 +13,7 @@ def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
     ks = []
     errors = []
     for k in range(k_min, k_max + 1):
-        model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=42)
+        model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=24)
         model.fit(tfidf_matrix)
         ks.append(k)
         errors.append(model.reconstruction_err_)
@@ -22,7 +22,9 @@ def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
     plt.xlabel("Anzahl Themen (k)")
     plt.ylabel("Rekonstruktionsfehler (kleiner = besser)")
     plt.title("Ellbogen-Methode (NMF)")
+    plt.savefig("results/ellbogen.png")
     plt.show()
+    
 
 
 
