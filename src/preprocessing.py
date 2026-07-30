@@ -1,28 +1,39 @@
 import re
 import spacy
 
-nlp = spacy.load("de_core_news_sm", disable=["parser","ner"])
+nlp = spacy.load("de_core_news_sm", disable=["parser", "ner"])
 
 
-# wandelt den jeweiligen Text in einen bereinigten String um
-def clean_text(text):
+# Kleinschreibung und Entfernen von URLs und @-Namen
+def clean_regex(text):
     text = text.lower()
     text = re.sub(r"https?://\S+|www\.\S+", " ", text)
     text = re.sub(r"@\w+", " ", text)
+    return text
 
-    doc = nlp(text)
+
+# Behält nur relevante Grundformen (keine Füll- und Kurzwörter)
+def lemmas_from_doc(doc):
     words = []
     for t in doc:
-        if t.is_alpha and not t.is_stop and len(t.lemma_) >= 3:
-            words.append(t.lemma_.lower())
-    
-    cleaned_text = " ".join(words)
-    return cleaned_text
+        lemma = t.lemma_.lower()
+        if t.is_alpha and not t.is_stop and len(lemma) >= 3:
+            words.append(lemma)
+    return " ".join(words)
 
 
-# bereinigt den Datensatz
+# Säubert einen einzelnen Text (Regex + Lemmatisierung)
+def clean_text(text):
+    return lemmas_from_doc(nlp(clean_regex(text)))
+
+
+# Reinigung des gesamten Datensatzes
 def clean_corpus(texts):
+    cleaned = []
+    for t in texts:
+        cleaned.append(clean_regex(t))
+
     docs = []
-    for text in texts:
-        docs.append(clean_text(text))
+    for doc in nlp.pipe(cleaned, batch_size=500):
+        docs.append(lemmas_from_doc(doc))
     return docs
