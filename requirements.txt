@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+spacy
+matplotlib
+wordcloud
+gensim
+
+# Zusätzlich das deutsche spaCy-Sprachmodell installieren:
+#   python -m spacy download de_core_news_sm
