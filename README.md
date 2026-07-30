@@ -12,9 +12,9 @@ Workflow: Daten laden → Vorverarbeitung (spaCy) → Vektorisierung (Bag-of-Wor
 - `analyse.ipynb` – **Präsentations-Notebook**: die komplette Analyse, läuft eigenständig
   von oben nach unten („Run All").
 - `main.py` – führt die gesamte Pipeline als Skript aus (`python main.py`).
-- `data_loader.py`, `preprocessing.py`, `vectorization.py`, `topic_modeling.py`,
-  `visualization.py` – die einzelnen Analyse-Schritte als Module.
-- `find_n_topics.py` – Bestimmung der Themenzahl (Ellbogen- und Coherence-Methode).
+- `src/` – die einzelnen Analyse-Schritte als Module: `data_loader.py`,
+  `preprocessing.py`, `vectorization.py`, `topic_modeling.py`, `visualization.py`.
+- `src/find_n_topics.py` – Bestimmung der Themenzahl (Ellbogen- und Coherence-Methode).
 - `results/` – erzeugte Abbildungen.
 
 ## Installation
