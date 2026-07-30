@@ -1,12 +1,13 @@
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 EXTRA_STOPWORDS = ["deutsch", "deutsche", "deutschen", "bahn", "db", "mal", "gutefrage", "net", "nen", "hab", 
-                   "hallo", "einfach", "eigentlich", "umsonst", "letzter", "nächster", "normal", "sogar"]
+                   "hallo", "einfach", "eigentlich", "umsonst", "letzter", "nächster", "normal", "sogar",
+                   "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag", "fast", "via"]
 
 
 # Erstellung der Bag of Words Matrix
 def build_bow(docs):
-    vectorizer = CountVectorizer(min_df=5, max_df=0.5, stop_words=EXTRA_STOPWORDS)
+    vectorizer = CountVectorizer(min_df=10, max_df=0.5, stop_words=EXTRA_STOPWORDS)
     matrix = vectorizer.fit_transform(docs)
 
     return matrix, vectorizer
@@ -14,7 +15,7 @@ def build_bow(docs):
 
 # Erstellung der TF-IDF Matrix (Gewichtet nach Häufigkeit und Seltenheit)
 def build_tfidf(docs):
-    vectorizer = TfidfVectorizer(min_df=5, max_df=0.5, stop_words=EXTRA_STOPWORDS)
+    vectorizer = TfidfVectorizer(min_df=10, max_df=0.5, stop_words=EXTRA_STOPWORDS)
     matrix = vectorizer.fit_transform(docs)
     
     return matrix, vectorizer
