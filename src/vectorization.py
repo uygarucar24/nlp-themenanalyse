@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
-EXTRA_STOPWORDS = ["deutsch", "deutsche", "deutschen", "bahn", "db"]
+EXTRA_STOPWORDS = ["deutsch", "deutsche", "deutschen", "bahn", "db", "mal", "gutefrage", "net", "nen", "hab", 
+                   "hallo", "einfach", "eigentlich", "umsonst", "letzter", "nächster", "normal", "sogar"]
 
 
 # Erstellung der Bag of Words Matrix
