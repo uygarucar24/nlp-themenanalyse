@@ -4,6 +4,10 @@ Automatische Extraktion der häufigsten Themen aus deutschsprachigen Beschwerden
 (GermEval 2017, Deutsche Bahn) mit Methoden der maschinellen Sprachverarbeitung (NLP).
 Portfolio-Projekt zum IU-Kurs „Projekt: Data Analysis" (DLBDSEDA02).
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/uygarucar24/nlp-themenanalyse/blob/main/analyse.ipynb)
+
+> Ein Klick auf den Badge öffnet `analyse.ipynb` direkt in Google Colab – dort „Runtime → Run all", fertig (keine lokale Installation nötig).
+
 ## Überblick
 Workflow: Daten laden → Vorverarbeitung (spaCy) → Vektorisierung (Bag-of-Words & TF-IDF)
 → Themen-Extraktion (NMF & LDA) → Visualisierung (Wortwolken, Themenverteilung).
@@ -24,7 +28,8 @@ python -m spacy download de_core_news_sm
 ```
 
 ## Ausführen
-- **Notebook (empfohlen):** `analyse.ipynb` öffnen und „Run All".
+- **In Google Colab (ein Klick, ohne Installation):** oben auf den „Open in Colab"-Badge klicken → „Runtime → Run all".
+- **Lokal im Notebook:** `analyse.ipynb` öffnen und „Run All".
 - **Als Skript:** `python main.py`
 
 ## Datenquelle

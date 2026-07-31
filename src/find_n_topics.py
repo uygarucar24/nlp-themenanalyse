@@ -10,16 +10,16 @@ from vectorization import build_tfidf
 
 # Ellbogen Methode - Zeichnet den NMF-Rekonstruktionsfehler für verschiedene Werte der Themenanzahl (k)
 def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
-    ks = []
+    k_values = []
     errors = []
     for k in range(k_min, k_max + 1):
         model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=24)
         model.fit(tfidf_matrix)
-        ks.append(k)
+        k_values.append(k)
         errors.append(model.reconstruction_err_)
 
     plt.figure()
-    plt.plot(ks, errors, marker="o")
+    plt.plot(k_values, errors, marker="o")
     plt.xlabel("Anzahl Themen (k)")
     plt.ylabel("Rekonstruktionsfehler (kleiner = besser)")
     plt.title("Ellbogen-Methode (NMF)")
@@ -36,7 +36,7 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
         texts_tokens.append(d.split())
     dictionary = Dictionary(texts_tokens)
 
-    ks = []
+    k_values = []
     scores = []
     for k in range(k_min, k_max + 1):
         model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=24)
@@ -52,12 +52,12 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
         cm = CoherenceModel(topics=topics, texts=texts_tokens,
                             dictionary=dictionary, coherence="c_v")
         score = cm.get_coherence()
-        ks.append(k)
+        k_values.append(k)
         scores.append(score)
         print(f"k={k}: Coherence={score:.4f}")
 
     plt.figure()
-    plt.plot(ks, scores, marker="o", color="#C44E52")
+    plt.plot(k_values, scores, marker="o", color="#C44E52")
     plt.xlabel("Anzahl Themen (k)")
     plt.ylabel("Coherence Score (c_v, höher = besser)")
     plt.title("Coherence-Score-Methode (NMF)")
