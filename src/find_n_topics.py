@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import os
 from sklearn.decomposition import NMF
 from gensim.corpora import Dictionary
 from gensim.models import CoherenceModel
@@ -7,11 +8,13 @@ from data_loader import load_data
 from preprocessing import clean_corpus
 from vectorization import build_tfidf
 
+# Ergebnis-Ordner (relativ zum Projekt, funktioniert von jedem cwd aus)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS_DIR = os.path.join(BASE_DIR, "results")
 
 
 # Ellbogen Methode - Zeichnet den NMF-Rekonstruktionsfehler für verschiedene Werte der Themenanzahl (k)
 def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
-    """Zeichnet den NMF-Rekonstruktionsfehler für verschiedene Themenzahlen."""
     ks = []
     errors = []
     for k in range(k_min, k_max + 1):
@@ -20,20 +23,20 @@ def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
         ks.append(k)
         errors.append(model.reconstruction_err_)
 
+    plt.figure()
     plt.plot(ks, errors, marker="o")
     plt.xlabel("Anzahl Themen (k)")
     plt.ylabel("Rekonstruktionsfehler (kleiner = besser)")
     plt.title("Ellbogen-Methode (NMF)")
-    plt.savefig("results/ellbogen.png")
-    plt.show()    
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    plt.savefig(os.path.join(RESULTS_DIR, "ellbogen.png"))
+    plt.show()
 
 
-
+# Berechnet und zeichnet den Kohärenzwert (C_v) bei unterschiedlicher Themenanzahl
 def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
-    """Berechnet den C_v-Coherence-Score von NMF für verschiedene Themenzahlen."""
     words = vectorizer.get_feature_names_out()
 
-    # gensim benötigt die Texte als Token-Listen und ein Wörterbuch
     texts_tokens = []
     for d in docs:
         texts_tokens.append(d.split())
@@ -45,7 +48,6 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
         model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=24)
         model.fit(tfidf_matrix)
 
-        # Top-10-Wörter je Thema sammeln
         topics = []
         for topic in model.components_:
             top_words = []
@@ -60,10 +62,19 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
         scores.append(score)
         print(f"k={k}: Coherence={score:.4f}")
 
+    plt.figure()
+    plt.plot(ks, scores, marker="o", color="#C44E52")
+    plt.xlabel("Anzahl Themen (k)")
+    plt.ylabel("Coherence Score (c_v, höher = besser)")
+    plt.title("Coherence-Score-Methode (NMF)")
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    plt.savefig(os.path.join(RESULTS_DIR, "coherence.png"))
+    plt.show()
+
 
 if __name__ == "__main__":
-    df = load_data(5000)  
+    df = load_data(5000)
     docs = clean_corpus(df["text"])
     tfidf_matrix, tfidf_vectorizer = build_tfidf(docs)
     plot_elbow(tfidf_matrix)
-    plot_coherence(docs, tfidf_matrix, tfidf_vectorizer)   
+    plot_coherence(docs, tfidf_matrix, tfidf_vectorizer)
