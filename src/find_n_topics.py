@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import os
 from sklearn.decomposition import NMF
 from gensim.corpora import Dictionary
 from gensim.models import CoherenceModel
@@ -7,10 +6,6 @@ from gensim.models import CoherenceModel
 from data_loader import load_data
 from preprocessing import clean_corpus
 from vectorization import build_tfidf
-
-# Ergebnis-Ordner (relativ zum Projekt, funktioniert von jedem cwd aus)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
 
 
 # Ellbogen Methode - Zeichnet den NMF-Rekonstruktionsfehler für verschiedene Werte der Themenanzahl (k)
@@ -28,8 +23,7 @@ def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
     plt.xlabel("Anzahl Themen (k)")
     plt.ylabel("Rekonstruktionsfehler (kleiner = besser)")
     plt.title("Ellbogen-Methode (NMF)")
-    os.makedirs(RESULTS_DIR, exist_ok=True)
-    plt.savefig(os.path.join(RESULTS_DIR, "ellbogen.png"))
+    plt.savefig("results/ellbogen.png")
     plt.show()
 
 
@@ -67,8 +61,7 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
     plt.xlabel("Anzahl Themen (k)")
     plt.ylabel("Coherence Score (c_v, höher = besser)")
     plt.title("Coherence-Score-Methode (NMF)")
-    os.makedirs(RESULTS_DIR, exist_ok=True)
-    plt.savefig(os.path.join(RESULTS_DIR, "coherence.png"))
+    plt.savefig("results/coherence.png")
     plt.show()
 
 
