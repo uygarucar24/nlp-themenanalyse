@@ -9,7 +9,7 @@ LOCAL_CSV = os.path.join(BASE_DIR, "data", "germeval.csv")
 
 
 # Lädt Daten und speichert als csv Datei 
-def load_data(max_docs):
+def load_data():
     if os.path.exists(LOCAL_CSV):
         df = pd.read_csv(LOCAL_CSV)
         print(f"Lokal geladen: {len(df)} Dokumente")
@@ -25,8 +25,5 @@ def load_data(max_docs):
     # Nur echte Beschwerden behalten: relevant und negatives Sentiment.
     df = df[(df["relevance"] == True) & (df["sentiment"] == "negative")]
     print(f"Nach Beschwerden-Filter (relevant & negativ): {len(df)} Dokumente")
-
-    if max_docs is not None and len(df) > max_docs:
-        df = df.sample(max_docs, random_state=24)
 
     return df.reset_index(drop=True)

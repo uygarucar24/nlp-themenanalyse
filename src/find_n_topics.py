@@ -13,7 +13,8 @@ def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
     k_values = []
     errors = []
     for k in range(k_min, k_max + 1):
-        model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=24)
+        model = NMF(n_components=k, init="nndsvda", beta_loss="kullback-leibler",
+                    solver="mu", max_iter=500, random_state=24)
         model.fit(tfidf_matrix)
         k_values.append(k)
         errors.append(model.reconstruction_err_)
@@ -39,7 +40,8 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
     k_values = []
     scores = []
     for k in range(k_min, k_max + 1):
-        model = NMF(n_components=k, init="nndsvda", max_iter=400, random_state=24)
+        model = NMF(n_components=k, init="nndsvda", beta_loss="kullback-leibler",
+                    solver="mu", max_iter=500, random_state=24)
         model.fit(tfidf_matrix)
 
         topics = []
@@ -49,8 +51,9 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
                 top_words.append(words[i])
             topics.append(top_words)
 
+        # processes=1 wegen gensim unter Windows
         cm = CoherenceModel(topics=topics, texts=texts_tokens,
-                            dictionary=dictionary, coherence="c_v")
+                            dictionary=dictionary, coherence="c_v", processes=1)
         score = cm.get_coherence()
         k_values.append(k)
         scores.append(score)
@@ -66,7 +69,7 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
 
 
 if __name__ == "__main__":
-    df = load_data(5000)
+    df = load_data()
     docs = clean_corpus(df["text"])
     tfidf_matrix, tfidf_vectorizer = build_tfidf(docs)
     plot_elbow(tfidf_matrix)
