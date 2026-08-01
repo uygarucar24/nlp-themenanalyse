@@ -1,16 +1,18 @@
 from sklearn.decomposition import NMF, LatentDirichletAllocation
 
 
-# Findet Themen mit NMF (auf TF-IDF Matrix)
+# Findet Themen mit NMF (auf TF-IDF Matrix, Kullback-Leibler-Divergenz)
 def fit_nmf(tfidf_matrix, n_topics):
-    model = NMF(n_components=n_topics, init="nndsvda", max_iter=400, random_state=24)
+    model = NMF(n_components=n_topics, init="nndsvda",
+                beta_loss="kullback-leibler", solver="mu",
+                max_iter=500, random_state=24)
     model.fit(tfidf_matrix)
 
     return model
 
 # Findet Themen mit LDA (auf Bag of Words Matrix)
 def fit_lda(bow_matrix, n_topics):
-    model = LatentDirichletAllocation(n_components=n_topics, learning_method="batch", max_iter=20, random_state=24)
+    model = LatentDirichletAllocation(n_components=n_topics, learning_method="batch", max_iter=50, random_state=24)
     model.fit(bow_matrix)
 
     return model

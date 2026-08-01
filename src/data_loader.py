@@ -22,6 +22,10 @@ def load_data(max_docs):
     df["text"] = df["text"].astype(str).str.strip()
     df = df.drop_duplicates(subset="text")
 
+    # Nur echte Beschwerden behalten: relevant und negatives Sentiment.
+    df = df[(df["relevance"] == True) & (df["sentiment"] == "negative")]
+    print(f"Nach Beschwerden-Filter (relevant & negativ): {len(df)} Dokumente")
+
     if max_docs is not None and len(df) > max_docs:
         df = df.sample(max_docs, random_state=24)
 
