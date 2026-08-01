@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from wordcloud import WordCloud
 
 # Erstellt je Thema eine Wortwolke und speichert die Abbildung im Ordner results
@@ -31,3 +32,41 @@ def show_wordclouds(model, vectorizer, method, n_words=15):
     plt.show()
 
 
+# Zählt die Dokumente je Thema und zeigt die Themengrößen als Balkendiagramm
+def show_topic_sizes(model, matrix, method):
+    doc_topic = model.transform(matrix)
+    n_topics = len(model.components_)
+
+    counts = np.zeros(n_topics, dtype=int)
+    for row in doc_topic:
+        best = row.argmax()
+        counts[best] = counts[best] + 1
+
+    total = counts.sum()
+    order = counts.argsort()[::-1]
+
+    labels = []
+    sizes = []
+    for i in order:
+        labels.append(f"Thema {i + 1}")
+        sizes.append(counts[i])
+
+    plt.figure(figsize=(8, 5))
+    positions = range(len(labels))
+    plt.barh(positions, sizes, color="#4C72B0")
+    plt.yticks(positions, labels)
+    plt.gca().invert_yaxis()
+    plt.xlabel("Anzahl Dokumente")
+    plt.title(f"Themengrößen ({method})")
+    for i in positions:
+        pct = 100 * sizes[i] / total
+        plt.text(sizes[i], i, f" {pct:.1f}%", va="center")
+
+    plt.tight_layout()
+    plt.savefig(f"results/themengrößen_{method}.png")
+    plt.show()
+
+    print(f"\nThemengrößen ({method}):")
+    for i in order:
+        pct = 100 * counts[i] / total
+        print(f"  Thema {i + 1}: {counts[i]} Dokumente ({pct:.1f}%)")
