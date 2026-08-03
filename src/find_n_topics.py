@@ -14,7 +14,7 @@ def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
     errors = []
     for k in range(k_min, k_max + 1):
         model = NMF(n_components=k, init="nndsvda", beta_loss="kullback-leibler",
-                    solver="mu", max_iter=500, random_state=24)
+                    solver="mu", max_iter=200, random_state=24)
         model.fit(tfidf_matrix)
         k_values.append(k)
         errors.append(model.reconstruction_err_)
@@ -41,7 +41,7 @@ def plot_coherence(docs, tfidf_matrix, vectorizer, k_min=2, k_max=10):
     scores = []
     for k in range(k_min, k_max + 1):
         model = NMF(n_components=k, init="nndsvda", beta_loss="kullback-leibler",
-                    solver="mu", max_iter=500, random_state=24)
+                    solver="mu", max_iter=200, random_state=24)
         model.fit(tfidf_matrix)
 
         topics = []

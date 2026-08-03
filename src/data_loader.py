@@ -27,6 +27,6 @@ def load_data():
 
     # Nur echte Beschwerden behalten: relevant und negatives Sentiment.
     df = df[(df["relevance"] == True) & (df["sentiment"] == "negative")]
-    print(f"Nach Beschwerden-Filter: (relevant & negativ): {len(df)} Dokumente")
+    print(f"Nach Beschwerden-Filter (relevant & negativ): {len(df)} Dokumente")
 
     return df.reset_index(drop=True)
