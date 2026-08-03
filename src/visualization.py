@@ -1,6 +1,15 @@
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 from wordcloud import WordCloud
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS_DIR = os.path.join(BASE_DIR, "results")
+
+def result_path(filename):
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    return os.path.join(RESULTS_DIR, filename)
+
 
 # Erstellt je Thema eine Wortwolke und speichert die Abbildung im Ordner results
 def show_wordclouds(model, vectorizer, method, n_words=15):
@@ -28,7 +37,7 @@ def show_wordclouds(model, vectorizer, method, n_words=15):
         axes[j].axis("off")
 
     plt.tight_layout()
-    plt.savefig(f"results/wortwolken_{method}.png")
+    plt.savefig(result_path(f"wortwolken_{method}.png"))
     plt.show()
 
 
@@ -63,7 +72,7 @@ def show_topic_sizes(model, matrix, method):
         plt.text(sizes[i], i, f" {pct:.1f}%", va="center")
 
     plt.tight_layout()
-    plt.savefig(f"results/themengrößen_{method}.png")
+    plt.savefig(result_path(f"themengrößen_{method}.png"))
     plt.show()
 
     print(f"\nThemengrößen ({method}):")
