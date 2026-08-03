@@ -22,11 +22,6 @@ def lemmas_from_doc(doc):
     return " ".join(words)
 
 
-# Säubert einen einzelnen Text (Regex + Lemmatisierung)
-def clean_text(text):
-    return lemmas_from_doc(nlp(clean_regex(text)))
-
-
 # Reinigung des gesamten Datensatzes
 def clean_corpus(texts):
     cleaned = []
