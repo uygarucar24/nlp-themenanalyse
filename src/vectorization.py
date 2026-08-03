@@ -29,7 +29,7 @@ def build_tfidf(docs):
     return matrix, vectorizer
 
 
-# Vergleicht die häufigsten Wörter (BoW) mit den stärksten TF-IDF-Gewichten
+# Stellt die häufigsten BoW-Wörter den stärksten TF-IDF-Gewichten gegenüber
 def compare_vectorizers(bow_matrix, bow_vectorizer, tfidf_matrix, tfidf_vectorizer, n_words=15):
     bow_words = bow_vectorizer.get_feature_names_out()
     tfidf_words = tfidf_vectorizer.get_feature_names_out()

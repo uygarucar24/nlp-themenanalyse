@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCAL_CSV = os.path.join(BASE_DIR, "data", "germeval.csv")
 
 
-# Lädt Daten und speichert als csv Datei 
+# Beim ersten Lauf von Hugging Face laden und lokal ablegen, danach geht es offline
 def load_data():
     if os.path.exists(LOCAL_CSV):
         df = pd.read_csv(LOCAL_CSV)

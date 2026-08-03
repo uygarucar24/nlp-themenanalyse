@@ -11,7 +11,7 @@ def result_path(filename):
     return os.path.join(RESULTS_DIR, filename)
 
 
-# Erstellt je Thema eine Wortwolke und speichert die Abbildung im Ordner results
+# Eine Wortwolke je Thema, Schriftgröße entspricht dem Gewicht im Thema
 def show_wordclouds(model, vectorizer, method, n_words=15):
     words = vectorizer.get_feature_names_out()
     n_topics = len(model.components_)
@@ -41,7 +41,7 @@ def show_wordclouds(model, vectorizer, method, n_words=15):
     plt.show()
 
 
-# Zählt die Dokumente je Thema und zeigt die Themengrößen als Balkendiagramm
+# Ordnet jede Beschwerde ihrem stärksten Thema zu und zeigt die Themengrößen als Balkendiagramm
 def show_topic_sizes(model, matrix, method):
     doc_topic = model.transform(matrix)
     n_topics = len(model.components_)
