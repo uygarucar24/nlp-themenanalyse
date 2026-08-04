@@ -28,7 +28,7 @@ def show_wordclouds(model, vectorizer, method, n_words=15):
             weights[words[idx]] = topic[idx]
 
         cloud = WordCloud(width=400, height=300, background_color="white",
-                          colormap="viridis").generate_from_frequencies(weights)
+                          colormap="viridis", random_state=24).generate_from_frequencies(weights)
         axes[i].imshow(cloud, interpolation="bilinear")
         axes[i].set_title(f"{method} - Thema {i + 1}")
         axes[i].axis("off")
