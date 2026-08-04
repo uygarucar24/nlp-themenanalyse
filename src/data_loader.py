@@ -26,7 +26,7 @@ def load_data():
     print(f"Nach Duplikat-Filter: {len(df)} Dokumente ({duplicates} Duplikate entfernt)")
 
     # Nur echte Beschwerden behalten: relevant und negatives Sentiment.
-    df = df[(df["relevance"] == True) & (df["sentiment"] == "negative")]
+    df = df[df["relevance"] & (df["sentiment"] == "negative")]
     print(f"Nach Beschwerden-Filter (relevant & negativ): {len(df)} Dokumente")
 
     return df.reset_index(drop=True)
