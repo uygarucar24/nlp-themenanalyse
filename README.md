@@ -26,6 +26,8 @@ Das NMF-Modell findet fünf Themen. Drei davon sind etwa gleich groß und machen
 
 Die Anteile stammen aus dem Modell mit `random_state=24`. Die Themen selbst sind stabil. Über fünf Seeds bleiben bei NMF im Mittel 9,34 von 10 Wörtern je Thema gleich, bei LDA nur 4,22. Ein Teil von Thema 5 besteht aus geteilten Nachrichtenmeldungen über Funklöcher und nicht aus selbst erlebten Beschwerden.
 
+![Wortwolken der fünf NMF-Themen](results/wortwolken_NMF.png)
+
 ## Projektstruktur
 
 - `analyse.ipynb`: das Präsentations-Notebook mit der kompletten Analyse, der Stabilitätsprüfung und dem Optimierungsexperiment. Es läuft von oben nach unten durch.
