@@ -1,4 +1,4 @@
-# Python-Abhängigkeiten (getestet mit Python 3.10)
+# Python-Abhängigkeiten (läuft mit Python 3.10 bis 3.12)
 pandas==2.2.3
 numpy==1.26.3
 scipy==1.15.3

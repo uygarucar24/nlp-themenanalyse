@@ -6,14 +6,14 @@ EXTRA_STOPWORDS = ["deutsch", "deutsche", "deutschen", "bahn", "db", "mal", "gut
                    "hallo", "einfach", "eigentlich", "umsonst", "letzter", "nächster", "normal", "sogar",
                    "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag", "fast", "via"]
 
-# Städte-/Regionsnamen (für die Themen-Analyse nicht relevant)
+# Städte-/Regionsnamen (für die Themenanalyse nicht relevant)
 CITY_STOPWORDS = ["berlin", "berliner", "münchen", "hamburg", "köln", "kölner", "stuttgart",
                   "hannover", "leipzig", "bayern", "frankfurt", "bremen", "dresden"]
 
 STOPWORDS = EXTRA_STOPWORDS + CITY_STOPWORDS
 
 
-# Erstellung der Bag of Words Matrix
+# Erstellung der Bag-of-Words-Matrix
 def build_bow(docs):
     vectorizer = CountVectorizer(min_df=10, max_df=0.5, stop_words=STOPWORDS)
     matrix = vectorizer.fit_transform(docs)
@@ -21,7 +21,7 @@ def build_bow(docs):
     return matrix, vectorizer
 
 
-# Erstellung der TF-IDF Matrix (Gewichtet nach Häufigkeit und Seltenheit)
+# Erstellung der TF-IDF-Matrix (gewichtet nach Häufigkeit und Seltenheit)
 def build_tfidf(docs):
     vectorizer = TfidfVectorizer(min_df=10, max_df=0.5, stop_words=STOPWORDS)
     matrix = vectorizer.fit_transform(docs)

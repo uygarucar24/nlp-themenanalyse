@@ -17,7 +17,7 @@ def result_path(filename):
     return os.path.join(RESULTS_DIR, filename)
 
 
-# Ellbogen Methode - Zeichnet den NMF-Rekonstruktionsfehler für verschiedene Werte der Themenanzahl (k)
+# Ellbogen-Methode, zeichnet den NMF-Rekonstruktionsfehler für verschiedene Themenzahlen k
 def plot_elbow(tfidf_matrix, k_min=2, k_max=10):
     k_values = []
     errors = []
